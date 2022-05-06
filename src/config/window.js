@@ -5,7 +5,8 @@ const { app, BrowserWindow } = require('electron');
 module.exports = function createWindow () {
     const win = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 400,
+        show: false,
         webPreferences: {
             nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
@@ -14,5 +15,9 @@ module.exports = function createWindow () {
 
     win.webContents.openDevTools({ mode: 'detach' });
 
-    win.loadFile('index.html');
+    win.loadFile(path.join(__dirname, '../../dist/config.html'));
+
+    win.once('ready-to-show', () => {
+        win.show();
+    });
 }

@@ -4,13 +4,12 @@ const { app, dialog } = require('electron');
 
 const webpackExecute = require('./utils/webpackExecute')
     , launchController = require('./controller')
-    , openWindow = require('./window');
+    , openWindowMain = require('./src/main/window');
 
 Promise.all([webpackExecute(), app.whenReady()])
     .then(([webpackInfos, _]) => {
-        
         launchController();
-        openWindow();
+        openWindowMain();
     })
     .catch((err) => {
         console.error(err);

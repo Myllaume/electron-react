@@ -3,15 +3,22 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        main: './src/main/render.js',
+        config: './src/config/render.js'
+    },
     output: {
-        path: path.join(__dirname),
-        filename: 'bundle.js'
+        path: path.join(__dirname, 'dist'),
+        filename: '[name]-bundle.js'
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            title: 'Naute',
-            template: './src/template.html'
+        ...['main', 'config'].map(entry => {
+            return new HtmlWebpackPlugin({
+                filename: `${entry}.html`,
+                title: entry,
+                template: './src/template.html',
+                chunks: [entry]
+            })
         })
     ],
     module: {
