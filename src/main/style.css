@@ -1,0 +1,17 @@
+.App {
+    display: flex;
+}
+
+.Header {
+    flex: 1;
+}
+
+.Main {
+    flex: 4;
+}
+
+.Nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

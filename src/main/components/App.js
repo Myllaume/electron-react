@@ -1,21 +1,24 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+
+import { Outlet, Link } from "react-router-dom";
 
 export default function App ({
     ...props
 }) {
-    const message = useMemo(() => {
-        return window.api.getMessage();
-    }, []);
-
-    function onClickOpenWindow() {
-        window.api.openOtherWindow();
-    }
-
     return (
-        <main>
-            <h1>Bienvenue sur Naute !</h1>
-            <p>{message}</p>
-            <button onClick={onClickOpenWindow} >Ouvrir l'autre fenêtre</button>
-        </main>
+        <div className='App'>
+            <header className='Header'>
+                <h1>Naute</h1>
+                <nav className='Nav'>
+                    <ul>
+                        <li><Link to='/'>Accueil</Link></li>
+                        <li><Link to='list'>Voir la liste</Link></li>
+                    </ul>
+                </nav>
+            </header>
+            <main className='Main'>
+                <Outlet />
+            </main>
+        </div>
     )
 }
