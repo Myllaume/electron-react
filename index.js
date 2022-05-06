@@ -1,25 +1,21 @@
 const path = require('path');
 
-const { app, dialog } = require('electron')
-    , initSqlJs = require('sql.js');
+const { app, dialog } = require('electron');
 
 const webpackExecute = require('./utils/webpackExecute')
     , launchController = require('./controller')
     , openWindow = require('./window');
 
-const { getSqlLiteFile: getDatabase, save: saveDatabase } = require('./utils/database');
-
-Promise.all([webpackExecute(), app.whenReady(), initSqlJs()])
-    .then(([webpackInfos, _, SQL]) => {
+Promise.all([webpackExecute(), app.whenReady()])
+    .then(([webpackInfos, _]) => {
         
-        getDatabase(SQL)
-            .then((db) => {
-                launchController(db);
-                openWindow();
-            })
-            .catch((err) => console.log(err))
+        launchController();
+        openWindow();
     })
-    .catch((err) => app.quit())
+    .catch((err) => {
+        console.error(err);
+        app.quit()
+    })
 
 app.on('window-all-closed', () => {
     app.quit();
