@@ -7,6 +7,7 @@ import App from './components/App';
 import Welcome from './components/Welcome';
 import List from './components/List';
 
+import '../main.css';
 import './style.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
