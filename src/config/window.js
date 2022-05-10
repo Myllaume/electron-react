@@ -2,22 +2,34 @@ const path = require('path');
 
 const { app, BrowserWindow } = require('electron');
 
+let window;
+
 module.exports = function createWindow () {
-    const win = new BrowserWindow({
+    if (window !== undefined) {
+        window.focus();
+        return;
+    }
+
+    window = new BrowserWindow({
         width: 800,
         height: 400,
         show: false,
+        backgroundColor: '#fefefe',
         webPreferences: {
             nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
         }
     });
 
-    win.webContents.openDevTools({ mode: 'detach' });
+    window.webContents.openDevTools({ mode: 'detach' });
 
-    win.loadFile(path.join(__dirname, '../../dist/config.html'));
+    window.loadFile(path.join(__dirname, '../../dist/config.html'));
 
-    win.once('ready-to-show', () => {
-        win.show();
+    window.once('ready-to-show', () => {
+        window.show();
+    });
+
+    window.once('closed', () => {
+        window = undefined;
     });
 }
