@@ -40,4 +40,9 @@ module.exports = {
         ]
     },
     mode: "development",
+    devServer: {
+        static: path.join(__dirname, 'dist'),
+        port: 9000,
+        open: false
+    }
 }

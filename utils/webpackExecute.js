@@ -1,13 +1,10 @@
 const { app } = require('electron')
-    ,  webpack = require('webpack');
+    , webpack = require('webpack');
 
-const config = require('../webpack.config');
+let config = require('../webpack.config');
+config = { ...config, mode: 'production' }
 
-module.exports = function execute () {
-    if (app.isPackaged === true) {
-        return true;
-    }
-
+function execute () {
     return new Promise((resolve, reject) => {
         webpack(
             config,
@@ -26,3 +23,5 @@ module.exports = function execute () {
         );
     })
 }
+
+execute();

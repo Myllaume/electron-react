@@ -1,6 +1,7 @@
 const path = require('path');
 
 const { app, BrowserWindow } = require('electron');
+const { devServer } = require('../../webpack.config');
 
 let window;
 
@@ -23,7 +24,11 @@ module.exports = function createWindow () {
 
     window.webContents.openDevTools({ mode: 'detach' });
 
-    window.loadFile(path.join(__dirname, '../../dist/config.html'));
+    if (app.isPackaged === true) {
+        window.loadFile(path.join(__dirname, '../../dist/config.html'));
+    } else {
+        window.loadURL(`http://localhost:${devServer.port}/config.html`);
+    }
 
     window.once('ready-to-show', () => {
         window.show();

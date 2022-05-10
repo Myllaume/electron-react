@@ -1,19 +1,20 @@
 const path = require('path');
 
-const { app, dialog } = require('electron');
+const { app } = require('electron');
 
 const webpackExecute = require('./utils/webpackExecute')
+    , webpackServe = require('./utils/webpackServe')
     , launchController = require('./controller')
     , openWindowMain = require('./src/main/window');
 
-Promise.all([webpackExecute(), app.whenReady()])
-    .then(([webpackInfos, _]) => {
+Promise.all([webpackServe(), app.whenReady()])
+    .then(([webpackServeControl, _]) => {
         launchController();
         openWindowMain();
     })
     .catch((err) => {
         console.error(err);
-        app.quit()
+        app.quit();
     })
 
 app.on('window-all-closed', () => {

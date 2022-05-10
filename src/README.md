@@ -22,6 +22,7 @@ Plus d'informations :
 const path = require('path');
 
 const { app, BrowserWindow } = require('electron');
+const { devServer } = require('../../webpack.config');
 
 let window;
 
@@ -44,7 +45,11 @@ module.exports = function createWindow () {
 
     window.webContents.openDevTools({ mode: 'detach' });
 
-    window.loadFile(path.join(__dirname, '../../dist/<window_name>.html'));
+    if (app.isPackaged === true) {
+        window.loadFile(path.join(__dirname, '../../dist/<window_name>.html'));
+    } else {
+        window.loadURL(`http://localhost:${devServer.port}/<window_name>.html`);
+    }
 
     window.once('ready-to-show', () => {
         window.show();
